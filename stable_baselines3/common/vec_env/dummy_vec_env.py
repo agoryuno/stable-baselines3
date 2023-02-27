@@ -24,7 +24,7 @@ class DummyVecEnv(VecEnv):
 
     def __init__(self, env_fns: List[Callable[[], gym.Env]]):
         self.envs = [fn() for fn in env_fns]
-        if len(set([id(env.unwrapped) for env in self.envs])) != len(self.envs):
+        if len(self.envs) > 1 and len(set([id(env.unwrapped) for env in self.envs])) != len(self.envs):
             raise ValueError(
                 "You tried to create multiple environments, but the function to create them returned the same instance "
                 "instead of creating different objects. "
